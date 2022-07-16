@@ -4,7 +4,18 @@
 
 namespace g80 {
 
-    template<typename T> class ndeep_loop {
+    template<typename T> class itr {
+    private:
+        std::vector<size_t> ix_;
+        std::vector<T *> ix_ptr_;
+
+    public:
+        virtual inline auto ix() const -> const std::vector<size_t> & {return ix_;}
+        virtual inline auto ptr() const -> const std::vector<T *> & {return ix_ptr_;}
+
+    };
+
+    template<typename T> class ndeep_loop : public itr<T> {
 
     private:
 
@@ -18,14 +29,13 @@ namespace g80 {
             data_.size();
             data_.emplace_back(v);
             ix_.emplace_back(0);
+            ix_ptr_.emplace_back(nullptr);
         }
 
-        inline auto ix() const -> const std::vector<size_t> & {return ix_;}
-        inline auto ptr() const -> std::vector<const T *> {
-            std::vector<const T *> vec;
-            for (size_t i = 0; i != data_.size(); ++i)
-                vec.emplace_back(data_[i]->data() + ix_[i]);
-            return vec;
+        inline auto ix() const -> const std::vector<size_t> & override {return ix_;}
+        inline auto ptr() const -> const std::vector<T *> & override {
+            for (size_t i = 0; i != data_.size(); ++i) ix_ptr_[i] = data_[i]->data() + ix_[i];
+            return ix_ptr_;
         }
 
     private:
@@ -56,12 +66,14 @@ namespace g80 {
         auto reset() -> void {
             f_ = std::bind(&ndeep_loop::init, this);
             for (auto &ix : ix_) ix = 0;
+            for (auto &ix_ptr : ix_ptr_) ix_ptr = nullptr;
             d_ = 0;
         }
         auto clear() -> void {
             f_ = std::bind(&ndeep_loop::init, this);
             data_.clear();
             ix_.clear();
+            ix_ptr_.clear();
             d_ = 0;
         }
 
