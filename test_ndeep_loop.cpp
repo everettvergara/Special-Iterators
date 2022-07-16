@@ -15,12 +15,17 @@ auto main(const int argc, const char *argv[]) -> int {
     ndeep_loop<int> looper;
     for (auto &v : vec) looper.add_vector_ptr(&v);
 
+    // while(looper.iterate());
+    // looper.clear();
+    // for (auto &v : vec) looper.add_vector_ptr(&v);
+
     while(looper.iterate()) {
         // for (auto &i : looper.ix()) std::cout << i << " " ;
         for (auto &p : looper.ptr()) std::cout << *p << " " ;
-
         std::cout << "\n";
     }
     std::cout << std::endl;
+
+    
 
 }

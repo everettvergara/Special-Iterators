@@ -1,10 +1,9 @@
 #pragma once 
-
 #include <vector>
 #include <functional>
 
 namespace g80 {
-    
+
     template<typename T> class ndeep_loop {
 
     private:
@@ -53,6 +52,18 @@ namespace g80 {
     public:
 
         auto iterate() -> bool {return f_();}
+
+        auto reset() -> void {
+            f_ = std::bind(&ndeep_loop::init, this);
+            for (auto &ix : ix_) ix = 0;
+            d_ = 0;
+        }
+        auto clear() -> void {
+            f_ = std::bind(&ndeep_loop::init, this);
+            data_.clear();
+            ix_.clear();
+            d_ = 0;
+        }
 
     public:
 
