@@ -22,6 +22,12 @@ namespace g80 {
         }
 
         inline auto ix() const -> const std::vector<size_t> & {return ix_;}
+        inline auto ptr() const -> std::vector<const T *> {
+            std::vector<const T *> vec;
+            for (size_t i = 0; i != data_.size(); ++i)
+                vec.emplace_back(data_[i]->data() + ix_[i]);
+            return vec;
+        }
 
     private:
 
@@ -30,12 +36,9 @@ namespace g80 {
         auto invalid() -> bool {return false;}
 
         auto next() -> bool {
-            // std::cout << "here1\n";
             if (ix_[d_] != data_[d_]->size()) d_ = data_.size() - 1;
-            // std::cout << "here2\n";
             while (++ix_[d_] == data_[d_]->size())
                 if (ix_[d_] = 0; --d_ >= data_.size()) return false;
-            // std::cout << "here3\n";
             return true;
         }
 

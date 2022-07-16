@@ -16,7 +16,9 @@ auto main(const int argc, const char *argv[]) -> int {
     for (auto &v : vec) looper.add_vector_ptr(&v);
 
     while(looper.iterate()) {
-        for (auto &i : looper.ix()) std::cout << i << " " ;
+        // for (auto &i : looper.ix()) std::cout << i << " " ;
+        for (auto &p : looper.ptr()) std::cout << *p << " " ;
+
         std::cout << "\n";
     }
     std::cout << std::endl;
