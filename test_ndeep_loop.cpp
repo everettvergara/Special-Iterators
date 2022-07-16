@@ -15,8 +15,8 @@ auto main(const int argc, const char *argv[]) -> int {
     ndeep_loop<int> looper;
     for (auto &v : vec) looper.add_vector_ptr(&v);
 
-    // while(looper.iterate()) {
+    while(looper.iterate()) {
 
-    // }
+    }
 
 }
