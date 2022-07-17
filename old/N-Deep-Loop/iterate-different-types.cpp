@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+#include "ndeeploop.hpp"
+
+using namespace g80;
+
+std::vector<std::vector<int>> vec;
+std::vector<std::vector<int> *> to_iterate;
+
+auto init_vector_values() -> void;
+auto init_vector_to_iterate() -> void ;
+auto print_before(const loop_struct<int> &ls) -> void;
+auto print_after(const loop_struct<int> &ls) -> void;
+
+auto main(const int argc, const char *argv[]) -> int {
+    init_vector_values();
+    init_vector_to_iterate();
+
+    ndeep_loop<int> looper(to_iterate, print_before, print_after);
+    while(looper.iterate()) {
+        for (auto &i : looper.ix_ptr()) std::cout << "[" << i << "]"; std::cout << " - ";
+        for (auto &i : looper.value_ptr()) std::cout << *i << " "; std::cout << "\n";
+    }
+}
+
+auto init_vector_values() -> void {
+    vec.emplace_back(std::vector<int>());
+    vec.emplace_back(std::vector<int>());
+    vec.emplace_back(std::vector<int>());
+
+    // Initialize values
+    for (size_t a = 1; a <= 5; ++a) vec[0].emplace_back(a);
+    for (size_t b = 11; b <= 15; ++b) vec[1].emplace_back(b);
+    for (size_t c = 101; c <= 105; ++c) vec[2].emplace_back(c);
+}
+
+auto init_vector_to_iterate() -> void {
+    to_iterate.emplace_back(&vec[0]);
+    to_iterate.emplace_back(&vec[1]);
+    to_iterate.emplace_back(&vec[2]);
+}
+
+auto print_before(const loop_struct<int> &ls) -> void {
+    std::cout << "bef: " << ls.i_ << std::string((ls.i_ + 1) * 3, '-') << " | " << "\n";
+}
+
+auto print_after(const loop_struct<int> &ls) -> void {
+    std::cout << "aft: " << ls.i_ << std::string((ls.i_ + 1) * 3, '-') << "\n";
+}

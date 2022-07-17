@@ -18,8 +18,8 @@ namespace g80 {
 
         itr(const std::function<auto () -> bool> &f) : f_(f) {}
         auto iterate() -> bool {return f_();}
-        virtual auto reset() -> void {for (auto &ix : ix_) ix = 0; for (auto &ix_ptr : ix_ptr_) ix_ptr = nullptr;}
-        virtual auto clear() -> void {ix_.clear(); ix_ptr_.clear();}
+        virtual auto reset() -> void {}
+        virtual auto clear() -> void {}
         virtual auto add_vector_ptr(std::vector<T> *v) -> void {}
         virtual inline auto ix() const -> const std::vector<size_t> & {return ix_;}
         virtual inline auto ptr() -> const std::vector<T *> & {return ix_ptr_;}        

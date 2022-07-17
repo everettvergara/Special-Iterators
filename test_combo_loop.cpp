@@ -17,7 +17,7 @@ auto main(const int argc, const char *argv[]) -> int {
 
     while(looper.iterate()) {
         for (auto &i : looper.ix()) std::cout << i << " " ;
-        // for (auto &p : looper.ptr()) std::cout << *p << " " ;
+        for (auto &p : looper.ptr()) std::cout << *p << " " ;
         std::cout << "\n";
     }
     std::cout << std::endl;
