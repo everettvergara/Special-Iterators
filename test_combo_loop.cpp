@@ -5,23 +5,19 @@ using namespace g80;
 
 auto main(const int argc, const char *argv[]) -> int {
 
-    std::vector<std::vector<int>> vec;
-    for (size_t i = 0; i != 3; ++i) vec.emplace_back(std::vector<int>());
-    for (size_t a = 1; a <= 5; ++a) vec[0].emplace_back(a);
-    for (size_t b = 11; b <= 15; ++b) vec[1].emplace_back(b);
-    for (size_t c = 101; c <= 105; ++c) vec[2].emplace_back(c);
+    std::vector<int> vec;
+    for (size_t i = 1; i <= 10; ++i) vec.emplace_back(i);
 
-
-    ndeep_loop<int> looper;
-    for (auto &v : vec) looper.add_vector_ptr(&v);
+    combo_loop<int> looper(3);
+    looper.add_vector_ptr(&vec);
 
     // while(looper.iterate());
     // looper.clear();
     // for (auto &v : vec) looper.add_vector_ptr(&v);
 
     while(looper.iterate()) {
-        // for (auto &i : looper.ix()) std::cout << i << " " ;
-        for (auto &p : looper.ptr()) std::cout << *p << " " ;
+        for (auto &i : looper.ix()) std::cout << i << " " ;
+        // for (auto &p : looper.ptr()) std::cout << *p << " " ;
         std::cout << "\n";
     }
     std::cout << std::endl;
