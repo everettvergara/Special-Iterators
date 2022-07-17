@@ -34,7 +34,7 @@ namespace g80 {
         ndeep_loop() : itr<T>(std::bind(&ndeep_loop::init, this)) {}
         auto reset() -> void override {itr<T>::reset(); f_ = std::bind(&ndeep_loop::init, this); d_ = 0;}
         auto clear() -> void override {itr<T>::clear(); f_ = std::bind(&ndeep_loop::init, this); data_.clear(); d_ = 0;}
-        auto add_vector_ptr(std::vector<T> *v) -> void override {data_.size(); data_.emplace_back(v); ix_.emplace_back(0); ix_ptr_.emplace_back(nullptr);}
+        auto add_vector_ptr(std::vector<T> *v) -> void override {data_.emplace_back(v); ix_.emplace_back(0); ix_ptr_.emplace_back(nullptr);}
         inline auto ix() const -> const std::vector<size_t> & override {return ix_;}
         inline auto ptr() -> const std::vector<T *> & override {
             for (size_t i = 0; i != data_.size(); ++i) 
