@@ -36,7 +36,7 @@ namespace g80 {
 
     public:
 
-        combo_loop (size_t r) : itr<T>(std::bind(&combo_loop::init, this)), r_(r) {}
+        combo_loop (size_t r) : itr<T>(std::bind(&combo_loop::init, this)), r_(r), i_(r - 1) {}
 
         auto reset() -> void override {
             for (size_t i = 0; i != r_; ++i) ix_[i] = i;
